@@ -10,11 +10,26 @@
 <script src="javascripts/index.js" type="text/javascript" charset="utf-8"></script>
 
 <script type="text/javascript" charset="utf-8">
-  var qas = new QAs(roundOne);
-  console.log(qas);
+var qas = new QAs(roundOne);
+$(document).ready(function () {
+  qas.first().render();
+
+});
+function formSubmit() {
+  qas.next().render();
+}
 </script>
 </head>
 
 <body>
+
+<div id="container">
+  <div id="question_box">
+      <div id="question"> </div>
+      <div id="answer"> 
+      </div>
+      <input type="submit" name="" id="" value="提交" onclick="formSubmit()" />
+  </div>
+</div>
 </body>
 </html>

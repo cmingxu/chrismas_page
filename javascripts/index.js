@@ -23,18 +23,27 @@ var QAs = function (round) {
 };
 
 QAs.prototype.next = function(){
-  this.qas[this.current_index + 1];
+  this.current_index += 1;
+  return this.qas[this.current_index + 1];
+};
+
+QAs.prototype.first = function(){
+  return this.qas[0];
+};
+
+QAs.prototype.current = function(){
+  return this.qas[this.current_index];
 };
 
 var QA = function (options) {
   this.question = options.question;
   this.answer   = options.answer;
-  this.options  = options.options;
 
-  if(undefined == this.options){
+  if(undefined == options.options){
     this.type = "text";
   }else{
-    this.type = "choice";
+    this.type = "radio";
+    this.options  = options.options.split(",");
   }
 };
 
@@ -42,6 +51,26 @@ QA.prototype.answer_match = function () {
 }
 
 QA.prototype.render = function () {
+  $("#question").html(this.question);
+  var answer = [];
+
+  switch (this.type) {
+    case 'radio':
+      for (var i = 0, l = this.options.length; i < l; i ++) {
+      answer.push("<input type='radio' name=''></input>" + this.options[i]);
+    }
+    break;
+    case 'choice':
+      for (var i = 0, l = this.options.length; i < l; i ++) {
+      answer.push("<input type='checkbox' name=''></input>" + this.options[i]);
+    }
+    break;
+
+    case 'text':
+      answer.push("<input type='textarea' name=''></input>");
+    default:
+  }
+    $("#answer").html(answer.join(""));
 }
 
 
