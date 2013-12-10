@@ -1,6 +1,6 @@
 var roundOne =
-  [{"question": "以下哪个不是圣诞老人的昵称：", "options": "A 、Noel,B 、Santa,C 、Snow White", "answer":"C"},
-    {"question": "哪几个国家可以不用冬衣过圣诞：", "options": "A、丹麦,B、澳洲,C、南非,D、希腊,F、马尔代夫", "answer": "BCE"},
+  [{"question": "以下哪个不是圣诞老人的昵称 ?", "options": "A 、Noel,B 、Santa,C 、Snow White", "answer":"C"},
+    {"question": "哪几个国家可以不用冬衣过圣诞 ?", "options": "A、丹麦,B、澳洲,C、南非,D、希腊,F、马尔代夫", "answer": "BCE"},
     {"question": "路德教为了纪念耶稣降临而发明了一种记录生日前24天的形式，如今变成了让小盆友每天寻找一件当天的礼物，以更期待圣诞的降临，这就是圣诞日历的由来，它的英文被称为?", "answer": "Advent Calendar"},
     {"question": "以下哪种不是圣诞日历？", "answer": "D"},
     {"question": "圣诞节的传统颜色是以下哪几种？", "options": "A、红,B、橙,C、绿,D、金,E、白,F、蓝", "answer": "ACDEF"},
@@ -42,13 +42,30 @@ var QA = function (options) {
   if(undefined == options.options){
     this.type = "text";
   }else{
-    this.type = "radio";
+    if(options.answer.length == 1){
+      this.type = "radio";
+    }
+    else{
+      this.type = "choice";
+    }
     this.options  = options.options.split(",");
   }
 };
 
-QA.prototype.answer_match = function () {
+QA.prototype.answer_match = function (answer) {
+  console.log(answer);
+  switch (this.type) {
+    case 'radio':
+    break;
+    case 'choice':
+    break;
+
+    case 'text':
+      break;
+    default:
+  }
 }
+
 
 QA.prototype.render = function () {
   $("#question").html(this.question);
@@ -57,17 +74,17 @@ QA.prototype.render = function () {
   switch (this.type) {
     case 'radio':
       for (var i = 0, l = this.options.length; i < l; i ++) {
-      answer.push("<input type='radio' name=''></input>" + this.options[i]);
+      answer.push("<div class='item'> <input type='radio' name='result' class='result'></input>" + this.options[i] + "</div>");
     }
     break;
     case 'choice':
       for (var i = 0, l = this.options.length; i < l; i ++) {
-      answer.push("<input type='checkbox' name=''></input>" + this.options[i]);
+      answer.push("<div class='item'> <input type='checkbox' name='result' class='result'></input> " + this.options[i] + "</div>");
     }
     break;
 
     case 'text':
-      answer.push("<input type='textarea' name=''></input>");
+      answer.push("<div class='item'> <input type='textarea' name='result' class='input_text result'></input></item>");
     default:
   }
     $("#answer").html(answer.join(""));

@@ -16,7 +16,16 @@ $(document).ready(function () {
 
 });
 function formSubmit() {
+  var res = $("#form").get(0).result.value;
+  console.log(res);
+  console.log($("#form").get(0).result);
+  if(res){
+  qas.current().answer_match(res);
   qas.next().render();
+  }else{
+    alert("亲， 得填写一下答案哟!");
+  }
+  return false;
 }
 </script>
 </head>
@@ -25,10 +34,12 @@ function formSubmit() {
 
 <div id="container">
   <div id="question_box">
+    <form action="#" method="get" accept-charset="utf-8" onsubmit="return formSubmit()") id="form">
       <div id="question"> </div>
       <div id="answer"> 
       </div>
-      <input type="submit" name="" id="" value="提交" onclick="formSubmit()" />
+      <input type="submit" name="" id="" value="提交" class='submit' />
+    </form>
   </div>
 </div>
 </body>
