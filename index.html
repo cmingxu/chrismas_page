@@ -13,15 +13,24 @@
 var qas = new QAs(roundOne);
 $(document).ready(function () {
   qas.first().render();
-
 });
+
 function formSubmit() {
-  var res = $("#form").get(0).result.value;
-  console.log(res);
-  console.log($("#form").get(0).result);
+  var res = "";
+  if($(".result").is(':radio')){
+    res = $(".result:checked").val();
+  }
+  else if($(".result").is(':checkbox')){
+    $(".result:input:checked").each(function () { res += $(this).val(); });
+  }
+  else if($(".result").is(':input')){
+    res = $(".result").val();
+  }
   if(res){
-  qas.current().answer_match(res);
-  qas.next().render();
+    if(qas.current().answer_match(res)){
+      qas.next().render();}else{
+   alert("亲， 答案好像不太正确， 再来一次吧!");   
+    }
   }else{
     alert("亲， 得填写一下答案哟!");
   }

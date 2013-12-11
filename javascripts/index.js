@@ -8,8 +8,8 @@ var roundOne =
     {"question": "每年的圣诞节都是12月25日，可是有个国家的圣诞节却一反常态不是12月二十五日而是12月27日，你知道是哪个国家吗？", "answer": "埃及"},
     {"question": "圣诞老人出门的行头非常多，最为引人注目的是帮他拉雪橇的动物，它是？","options": "A、梅花鹿,B、驯鹿,C、长颈鹿,D、麋鹿", "answer": "B"},
     {"question": "装饰圣诞树时，最常在圣诞树的最顶端放 ","options": "A、一个玩偶或一颗星星,B、一份礼物,C、一个圣诞老人,D、一粒松果",  "answer": "A"},
-    {"question": "在传统的圣诞餐桌上，__是不可缺少的菜式", "answer": "A", "options": "A、烤火鸡 B、烤羊腿 C、烤乳猪 D、烤全羊"},
-    {"question": "在好侍12月圣诞专辑的宣传画面有出现圣诞老人吗？", "answer": "A", "options": "A、没有 B、有"},
+    {"question": "在传统的圣诞餐桌上，__是不可缺少的菜式", "answer": "A", "options": "A、烤火鸡,B、烤羊腿,C、烤乳猪,D、烤全羊"},
+    {"question": "在好侍12月圣诞专辑的宣传画面有出现圣诞老人吗？", "answer": "A", "options": "A、没有,B、有"},
     {"question": "看来你对圣诞节相关的知识很是了解，这么多题都难不倒你，已经接近成功，最后一题，圣诞老人我们一直叫他圣诞老人，那他原来的名字是什么？", "answer": "尼古拉"}
 ];
 var QAs = function (round) {
@@ -24,7 +24,7 @@ var QAs = function (round) {
 
 QAs.prototype.next = function(){
   this.current_index += 1;
-  return this.qas[this.current_index + 1];
+  return this.qas[this.current_index];
 };
 
 QAs.prototype.first = function(){
@@ -53,15 +53,13 @@ var QA = function (options) {
 };
 
 QA.prototype.answer_match = function (answer) {
-  console.log(answer);
   switch (this.type) {
     case 'radio':
-    break;
+      return answer == this.answer;
     case 'choice':
-    break;
-
+      return answer == this.answer;
     case 'text':
-      break;
+      return answer.toLowerCase() == this.answer.toLowerCase();
     default:
   }
 }
@@ -74,17 +72,17 @@ QA.prototype.render = function () {
   switch (this.type) {
     case 'radio':
       for (var i = 0, l = this.options.length; i < l; i ++) {
-      answer.push("<div class='item'> <input type='radio' name='result' class='result'></input>" + this.options[i] + "</div>");
+      answer.push("<div class='item'> <input type='radio' name='result[]' class='result' value='" + String.fromCharCode(65 + i) +"'></input>" + this.options[i] + "</div>");
     }
     break;
     case 'choice':
       for (var i = 0, l = this.options.length; i < l; i ++) {
-      answer.push("<div class='item'> <input type='checkbox' name='result' class='result'></input> " + this.options[i] + "</div>");
+      answer.push("<div class='item'> <input type='checkbox' name='result[]' class='result' value='" + String.fromCharCode(65 + i) + "'></input> " + this.options[i] + "</div>");
     }
     break;
 
     case 'text':
-      answer.push("<div class='item'> <input type='textarea' name='result' class='input_text result'></input></item>");
+      answer.push("<div class='item'> <input type='textarea' name='result[]' class='input_text result'></input></item>");
     default:
   }
     $("#answer").html(answer.join(""));
