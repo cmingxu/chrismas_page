@@ -27,6 +27,11 @@ QAs.prototype.next = function(){
   return this.qas[this.current_index];
 };
 
+
+QAs.prototype.has_next = function(){
+  return this.qas[this.current_index + 1] == undefined;
+};
+
 QAs.prototype.first = function(){
   return this.qas[0];
 };
