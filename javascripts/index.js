@@ -29,7 +29,7 @@ QAs.prototype.next = function(){
 
 
 QAs.prototype.has_next = function(){
-  return this.qas[this.current_index + 1] == undefined;
+  return !(this.qas[this.current_index + 1] == undefined);
 };
 
 QAs.prototype.first = function(){
