@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Atype:</strong>
+  <%= @activity.atype %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @activity.user_id %>
+</p>
+
+<p>
+  <strong>Answer:</strong>
+  <%= @activity.answer %>
+</p>
+
+<p>
+  <strong>Answer match:</strong>
+  <%= @activity.answer_match %>
+</p>
+
+<%= link_to 'Edit', edit_activity_path(@activity) %> |
+<%= link_to 'Back', activities_path %>

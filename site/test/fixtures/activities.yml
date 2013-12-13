@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  atype: MyString
+  user_id: 1
+  answer: MyString
+  answer_match: false
+
+two:
+  atype: MyString
+  user_id: 1
+  answer: MyString
+  answer_match: false
