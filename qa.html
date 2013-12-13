@@ -28,7 +28,12 @@ function formSubmit() {
   }
   if(res){
     if(qas.current().answer_match(res)){
-      qas.next().render();}else{
+      if(qas.has_next()){
+      qas.next().render();
+      }else{
+        window.location.href = "after.html";
+      }
+    }else{
    alert("亲， 答案好像不太正确， 再来一次吧!");   
     }
   }else{
