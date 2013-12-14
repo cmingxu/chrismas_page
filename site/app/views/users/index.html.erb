@@ -1,29 +1,74 @@
-<h1>Listing users</h1>
+<style type="text/css" media="all">
+table#stats_table{
+  border: 1px solid black;
+  width: 80%;
+  margin: 0px auto;
+  border-collapse: collapse;
+  border-spacing: 0.5rem;
+} 
 
-<table>
+table thead th{
+  background-color: #eee;
+}
+
+table td{
+  text-align: center;
+}
+
+
+</style>
+<table id='stats_table' border=1>
   <thead>
     <tr>
-      <th>Session</th>
-      <th>Weibo account</th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>日期</th>
+      <th>访问人数</th>
+      <th>参与人数</th>
+      <th>闯关成功</th>
+      <th>微博数</th>
+      <th>平均逗留时间</th>
     </tr>
   </thead>
 
+  <% User.all.includes(:activities).group_by(&:visit_date).each do |time, users| %>
+    <tr>
+       <td><%= time %></td>
+       <td><%= users.size %></td>
+       <td><%= users.select{|u| u.activities.where(:atype => "answer").size > 0}.length %></td>
+       <td><%= users.select{|u| u.activities.where(:atype => "finish_answer").size > 0}.length %></td>
+       <td><%= users.select{|u| u.weibo_account.present? }.length %></td>
+       <td><%= users.sum(&:stay_time) / users.size %> S</td>
+    </tr>
+   <% end %>
+
   <tbody>
-    <% @users.each do |user| %>
-      <tr>
-        <td><%= user.session_id %></td>
-        <td><%= user.weibo_account %></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
   </tbody>
 </table>
 
-<br>
 
-<%= link_to 'New User', new_user_path %>
+
+<h2> 所有访问者 </h2>
+<table id='stats_table' border=1>
+  <thead>
+    <tr>
+      <th>时间</th>
+      <th>年龄</th>
+      <th>微博</th>
+      <th>Session</th>
+      <th>Log次数</th>
+    </tr>
+  </thead>
+
+  <% User.all.includes(:activities).each do |u|%>
+    <tr>
+       <td><%= u.created_at.strftime("%m/%d %H:%M") %></td>
+       <td><%= u.age %></td>
+       <td><%= u.weibo_account %></td>
+       <td><%= u.session_id %></td>
+       <td><%= u.activities.size %></td>
+    </tr>
+   <% end %>
+
+  <tbody>
+  </tbody>
+</table>
+

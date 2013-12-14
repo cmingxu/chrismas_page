@@ -1,25 +1,43 @@
+<script type="text/javascript" charset="utf-8">
+  
+function formSubmit() {
+  var res = "";
+  if($(".result").is(':radio')){
+    res = $(".result:checked").val();
+  }
+  else if($(".result").is(':checkbox')){
+    $(".result:input:checked").each(function () { res += $(this).val(); });
+  }
+  else if($(".result").is(':input')){
+    res = $(".result").val();
+  }
+  if(!res){
+    alert("亲， 得填写一下答案哟!");
+    return false;
+  }
+}
+</script>
 <div id="question_box">
-
-  <%= form_tag :url => answer_path do  %>
+  <%= form_tag answer_path, :onsubmit => "return formSubmit()" do  %>
+    <%= hidden_field_tag "question", params[:question] %>
     <div id="question">
-
     <%= @question.question %>
   </div>
-  <div id="answer">
 
+  <div id="answer">
     <% if @question.type == "text"  %>
-      <%= text_field_tag "result" %>
+      <%= text_field_tag "result", "", :class => "result input_text" %>
   <% end %>
     <% if  @question.type == "radio"  %>
       <%- @question.options.each_with_index do |o, i| %>
-      <%= radio_button_tag "result[]", (65 + i).chr.to_i %> <%= o %>
+        <div class='item'><%= radio_button_tag "result[]", (65 + i).chr, false, :class => "result" %> <%= o %></div>
   <% end %>
   <% end %>
     <% if  @question.type == "checkbox" %>
       <%- @question.options.each_with_index do |o, i| %>
-      <%= check_box_tag "result[]", (65 + i).chr.to_i %> <%= o %>
-    <% end %>
-    <% end %>
+        <div class='item'><%= check_box_tag "result[]", (65 + i).chr , false, :class => "result"%> <%= o %></div>
+  <% end %>
+  <% end %>
   </div>
 
   <%= submit_tag "提交", :class => "submit" %>

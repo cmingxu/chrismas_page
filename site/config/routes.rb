@@ -3,11 +3,19 @@ Site::Application.routes.draw do
   get "welcome/index"
   get "welcome/question"
   get "welcome/summary"
-  post "answer" => "welcome#answer"
+  post "answer" => "welcome#answer_question"
 
   resources :users
 
   root "welcome#index"
+
+  get "redo_question" => "welcome#redo_question"
+  get "thanks" => "welcome#thanks"
+  get "summary" => "welcome#summary"
+  get "age_poll" => "welcome#age_poll"
+  get "question" => "welcome#question"
+  post "submit_age" => "welcome#submit_age"
+  post "leave_weibo_account" => "welcome#leave_weibo_account"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
