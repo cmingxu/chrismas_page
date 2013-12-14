@@ -1,2 +1,28 @@
-<h1>Welcome#question</h1>
-<p>Find me in app/views/welcome/question.html.erb</p>
+<div id="question_box">
+
+  <%= form_tag :url => answer_path do  %>
+    <div id="question">
+
+    <%= @question.question %>
+  </div>
+  <div id="answer">
+
+    <% if @question.type == "text"  %>
+      <%= text_field_tag "result" %>
+  <% end %>
+    <% if  @question.type == "radio"  %>
+      <%- @question.options.each_with_index do |o, i| %>
+      <%= radio_button_tag "result[]", (65 + i).chr.to_i %> <%= o %>
+  <% end %>
+  <% end %>
+    <% if  @question.type == "checkbox" %>
+      <%- @question.options.each_with_index do |o, i| %>
+      <%= check_box_tag "result[]", (65 + i).chr.to_i %> <%= o %>
+    <% end %>
+    <% end %>
+  </div>
+
+  <%= submit_tag "提交", :class => "submit" %>
+
+<% end %>
+</div>

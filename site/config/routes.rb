@@ -1,8 +1,9 @@
+# -*- encoding : utf-8 -*-
 Site::Application.routes.draw do
   get "welcome/index"
   get "welcome/question"
   get "welcome/summary"
-  resources :activities
+  post "answer" => "welcome#answer"
 
   resources :users
 

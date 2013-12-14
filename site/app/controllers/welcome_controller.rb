@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class WelcomeController < ApplicationController
   before_filter :random_string
 
@@ -6,11 +7,14 @@ class WelcomeController < ApplicationController
   end
 
   def question
-    session[:question].blank? ? session[:question] = "1" : (session[:question] = session[:question].next)
+    params[:question] ||= 0
+    @question = Question.all[params[:question].to_i]
+    ap @question
     @user.activities.create(:atype => "answer")
   end
 
   def answer_question
+    
   end
 
   def redo_question
