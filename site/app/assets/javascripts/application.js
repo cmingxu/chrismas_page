@@ -19,7 +19,7 @@ var roundOne =
   [{"question": "以下哪个不是圣诞老人的昵称 ?", "options": "Noel,Santa,Snow White", "answer":"C"},
     {"question": "哪几个国家可以不用冬衣过圣诞 ?", "options": "丹麦,澳洲,南非,希腊,马尔代夫", "answer": "BCE"},
     {"question": "路德教为了纪念耶稣降临而发明了一种记录生日前24天的形式，如今变成了让小盆友每天寻找一件当天的礼物，以更期待圣诞的降临，这就是圣诞日历的由来，它的英文被称为?", "answer": "Advent Calendar"},
-    {"question": "以下哪种不是圣诞日历？", "answer": "D"},
+    {"question": "以下哪种不是圣诞日历？", "answer": "D", "options": "http://placehold.it/64x64, http://placehold.it/64x64,http://placehold.it/64x64,http://placehold.it/64x64"},
     {"question": "圣诞节的传统颜色是以下哪几种？", "options": "红,橙,绿,金,白,蓝", "answer": "ACDEF"},
     {"question": "红色是所有传统颜色中最经典的一种，你知道它来自于哪个传说？", "options": "伊甸园中的红苹果,圣果的颜色,圣袍的颜色", "answer": "A"},
     {"question": "每年的圣诞节都是12月25日，可是有个国家的圣诞节却一反常态不是12月二十五日而是12月27日，你知道是哪个国家吗？", "answer": "埃及"},
@@ -73,7 +73,13 @@ var QA = function (options) {
     else{
       this.type = "choice";
     }
+
     this.options  = options.options.split(",");
+    console.log(this.options[0]);
+    console.log(this.options[0] && this.options[0].match(/http|png|jpg/));
+    if(this.options[0] && this.options[0].match(/http|png|jpg/)){
+      this.type = "images";
+    }
   }
 };
 
@@ -82,6 +88,8 @@ QA.prototype.answer_match = function (answer) {
     case 'radio':
       return answer == this.answer;
     case 'choice':
+      return answer == this.answer;
+    case 'images':
       return answer == this.answer;
     case 'text':
       return answer.toLowerCase() == this.answer.toLowerCase();
@@ -105,6 +113,14 @@ QA.prototype.render = function () {
       for (var i = 0, l = this.options.length; i < l; i ++) {
       cchar = String.fromCharCode(65 + i);
       answer.push("<div class='item'> <input type='checkbox' name='result[]' class='result' value='" + cchar + "'></input> " + cchar + ". " + this.options[i] + "</div>");
+    }
+    break;
+
+    case 'images':
+      for (var i = 0, l = this.options.length; i < l; i ++) {
+      cchar = String.fromCharCode(65 + i);
+      answer.push(" <input type='radio' name='result[]' class='result' value='" +
+                  cchar + "'/> "+ cchar + ". " +  "<img src=' " + this.options[i] + " ' /> " +  "</div>");
     }
     break;
 
