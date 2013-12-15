@@ -8,9 +8,10 @@
       <%= radio_button_tag "age", v, true %> <%= k %>
   <% end %>
 
-  <div style='height: 40px;'> </div>
-  <h3>选择您的性别</h3>
+    <div style='height: 40px;'> </div>
+    <h3>选择您的性别</h3>
 
+    <div style='height: 15px;'> </div>
     <% Question.gender_poll_options.each do |k, v| %>
       <%= radio_button_tag "gender", v, true %> <%= k %>
   <% end %>

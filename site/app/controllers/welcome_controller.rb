@@ -1,15 +1,11 @@
 # -*- encoding : utf-8 -*-
 class WelcomeController < ApplicationController
-  before_filter :random_string
+  before_filter :random_string, :except => [:index]
 
   def index
+    session[:random_string] = SecureRandom.hex(20)
+    @user = User.create(:session_id => session[:random_string])
     @user.activities.create(:atype => "landing")
-  end
-
-  def question
-  end
-
-  def age_poll
   end
 
   def participation
@@ -25,6 +21,7 @@ class WelcomeController < ApplicationController
     redirect_to question_path
   end
 
+  # not in use anymore
   def answer_question
     question = Question.all[params[:question].to_i]
     result = params[:result].is_a?(Array) ? params[:result].join : params[:result].strip
@@ -43,9 +40,6 @@ class WelcomeController < ApplicationController
     end
   end
 
-  def redo_question
-  end
-
   def summary
     @user.activities.create(:atype => "finish_answer")
   end
@@ -58,10 +52,11 @@ class WelcomeController < ApplicationController
   end
 
   def random_string
-    unless session[:random_string]
-      session[:random_string] = SecureRandom.hex(20)
+    @user = User.find_by_session_id(session[:random_string])
+    if not @user
+      redirect_to root_path 
+      return false
     end
-    @user = User.find_or_create_by_session_id(session[:random_string])
   end
 
   def criterion

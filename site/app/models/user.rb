@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   has_many :activities
 
   def visit_date
-    self.created_at.strftime("%m/%d")
+    self.created_at.in_time_zone("Beijing").strftime("%m/%d")
   end
 
   def stay_time

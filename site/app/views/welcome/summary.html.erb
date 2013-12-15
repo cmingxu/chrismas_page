@@ -17,10 +17,9 @@
 
 
   告诉我们您的微博吧
+  <div style="height: 10px;"> </div>
 
   <%= form_tag leave_weibo_account_path do %>
-    <div id="answer">
     <%= text_field_tag "weibo", "", :class => "result input_text" %>
-    <%= submit_tag "就是它了", :class => "submit" %>
-  </div>
+    <%= submit_tag "就是它了", :class => "submit", :style => "margin-top: 0px" %>
 <% end %>

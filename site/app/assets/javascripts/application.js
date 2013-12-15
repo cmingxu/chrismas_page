@@ -35,7 +35,9 @@ var QAs = function (round) {
   this.correct_num = 0;
 
   for (var i = 0, l = round.length; i < l; i ++) {
-    this.qas.push(new QA(round[i]));
+    qa = new QA(round[i]);
+    qa.qas = this;
+    this.qas.push(qa);
   };
 };
 
@@ -60,6 +62,7 @@ QAs.prototype.current = function(){
 var QA = function (options) {
   this.question = options.question;
   this.answer   = options.answer;
+  this.qas      = null;
 
   if(undefined == options.options){
     this.type = "text";
@@ -88,7 +91,7 @@ QA.prototype.answer_match = function (answer) {
 
 
 QA.prototype.render = function () {
-  $("#question").html(this.question);
+  $("#question").html(this.qas.current_index + 1 + ", " + this.question);
   var answer = [];
 
   switch (this.type) {
