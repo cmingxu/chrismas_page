@@ -32,4 +32,9 @@ EOF
   def self.age_poll_options
     [["20-30","20-30"], ["30-40","30-40"], ["40-50", "40-50"], ["50+", "50以上"]]
   end
+
+
+  def self.gender_poll_options
+    [["男","男"], ["女","女"]]
+  end
 end

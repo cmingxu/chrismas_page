@@ -1,6 +1,17 @@
 <script type="text/javascript" charset="utf-8">
-  
+var user_id = <%= @user.id %>;
+var first_answer =  true;
+
+var qas = new QAs(roundOne);
+$(document).ready(function () {
+  qas.first().render();
+});
+ 
 function formSubmit() {
+  if(first_answer){
+    $.ajax({url: "participate", type: "POST"});
+    first_answer = false;
+  }
   var res = "";
   if($(".result").is(':radio')){
     res = $(".result:checked").val();
@@ -11,33 +22,28 @@ function formSubmit() {
   else if($(".result").is(':input')){
     res = $(".result").val();
   }
-  if(!res){
+  if(res){
+    if(qas.current().answer_match(res)){
+      if(qas.has_next()){
+      qas.next().render();
+      }else{
+        window.location.href = "summary";
+      }
+    }else{
+   alert("亲， 答案好像不太正确， 再来一次吧!");   
+    }
+  }else{
     alert("亲， 得填写一下答案哟!");
-    return false;
   }
+  return false;
 }
 </script>
 <div id="question_box">
-  <%= form_tag answer_path, :onsubmit => "return formSubmit()" do  %>
-    <%= hidden_field_tag "question", params[:question] %>
+  <%= form_tag "#", :onsubmit => "return formSubmit()" do  %>
     <div id="question">
-    <%= @question.question %>
   </div>
 
   <div id="answer">
-    <% if @question.type == "text"  %>
-      <%= text_field_tag "result", "", :class => "result input_text" %>
-  <% end %>
-    <% if  @question.type == "radio"  %>
-      <%- @question.options.each_with_index do |o, i| %>
-        <div class='item'><%= radio_button_tag "result[]", (65 + i).chr, false, :class => "result" %> <%= o %></div>
-  <% end %>
-  <% end %>
-    <% if  @question.type == "checkbox" %>
-      <%- @question.options.each_with_index do |o, i| %>
-        <div class='item'><%= check_box_tag "result[]", (65 + i).chr , false, :class => "result"%> <%= o %></div>
-  <% end %>
-  <% end %>
   </div>
 
   <%= submit_tag "提交", :class => "submit" %>

@@ -33,7 +33,7 @@ table td{
     <tr>
        <td><%= time %></td>
        <td><%= users.size %></td>
-       <td><%= users.select{|u| u.activities.where(:atype => "answer").size > 0}.length %></td>
+       <td><%= users.select{|u| u.activities.where(:atype => "participate").size > 0}.length %></td>
        <td><%= users.select{|u| u.activities.where(:atype => "finish_answer").size > 0}.length %></td>
        <td><%= users.select{|u| u.weibo_account.present? }.length %></td>
        <td><%= users.sum(&:stay_time) / users.size %> S</td>
@@ -44,14 +44,17 @@ table td{
   </tbody>
 </table>
 
+<div style="height: 40px">
+  
+</div>
 
 
-<h2> 所有访问者 </h2>
 <table id='stats_table' border=1>
   <thead>
     <tr>
       <th>时间</th>
       <th>年龄</th>
+      <th>性别</th>
       <th>微博</th>
       <th>Session</th>
       <th>Log次数</th>
@@ -60,8 +63,9 @@ table td{
 
   <% User.all.includes(:activities).each do |u|%>
     <tr>
-       <td><%= u.created_at.strftime("%m/%d %H:%M") %></td>
+       <td><%= u.created_at.strftime("%m/%d %H:%M") %> (UTC)</td>
        <td><%= u.age %></td>
+       <td><%= u.gender %></td>
        <td><%= u.weibo_account %></td>
        <td><%= u.session_id %></td>
        <td><%= u.activities.size %></td>

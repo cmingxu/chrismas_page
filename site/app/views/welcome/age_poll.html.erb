@@ -1,11 +1,18 @@
 <div id="question_box">
-  <div id="question">选择您的年龄段</div>
+  <h3>选择您的年龄段</h3>
 
 
   <%= form_tag submit_age_path do %>
     <div id="answer">
     <% Question.age_poll_options.each do |k, v| %>
       <%= radio_button_tag "age", v, true %> <%= k %>
+  <% end %>
+
+  <div style='height: 40px;'> </div>
+  <h3>选择您的性别</h3>
+
+    <% Question.gender_poll_options.each do |k, v| %>
+      <%= radio_button_tag "gender", v, true %> <%= k %>
   <% end %>
   </div>
   <%= submit_tag "进入答题环节", :class => "submit" %>

@@ -16,6 +16,7 @@ Site::Application.routes.draw do
   get "question" => "welcome#question"
   post "submit_age" => "welcome#submit_age"
   post "leave_weibo_account" => "welcome#leave_weibo_account"
+  post "participate" => "welcome#participation"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

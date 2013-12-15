@@ -7,16 +7,20 @@ class WelcomeController < ApplicationController
   end
 
   def question
-    params[:question] ||= 0
-    @question = Question.all[params[:question].to_i]
   end
 
   def age_poll
   end
 
+  def participation
+    @user.activities.create(:atype => "participate")
+    head :ok
+  end
+
   def submit_age
     @user.activities.create(:atype => "submit_age")
     @user.age = params[:age]
+    @user.gender =params[:gender]
     @user.save
     redirect_to question_path
   end
