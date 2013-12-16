@@ -66,12 +66,15 @@ var QA = function (options) {
 
   if(undefined == options.options){
     this.type = "text";
+    this.type_in_chinese = "填空";
   }else{
     if(options.answer.length == 1){
       this.type = "radio";
+      this.type_in_chinese = "单选";
     }
     else{
       this.type = "choice";
+      this.type_in_chinese = "多选";
     }
 
     this.options  = options.options.split(",");
@@ -99,7 +102,7 @@ QA.prototype.answer_match = function (answer) {
 
 
 QA.prototype.render = function () {
-  $("#question").html(this.qas.current_index + 1 + ". " + this.question);
+  $("#question").html(this.qas.current_index + 1 + ". " + this.question + "  (" + this.type_in_chinese + ")");
   var answer = [];
 
   switch (this.type) {
