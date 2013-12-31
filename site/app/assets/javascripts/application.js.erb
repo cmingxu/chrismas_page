@@ -65,6 +65,24 @@ var roundTwo =
 "options": "红酱意大利面,烘焙美食,鸡尾酒,波尔多红烩牛肉,乌克兰红菜汤", "answer": "ABDE"}
 ];
 
+var roundThree = [
+  {"question": "元旦是哪些地方的法定节日？", "answer": "ABCD", "options": "中国大陆,台湾,香港,澳门"},
+  {"question": "中国古代称新年第一天为“元旦”，以下是元旦别称的是？", "answer": "ABCD", "options": "元日,元长,元朔,元春,初一"},
+  {"question": "新年守岁的习俗兴起于__（朝代），当时不少文人都有守岁的诗文，例如'一夜连双岁，五更分二年。", "answer": "A", "options":"南北朝,宋朝,唐朝,明朝"},
+  {"question": "为了祈求一家的福寿康宁，一些地方的人们保留着贴门神的习俗。民间的门神永远都怒目圆睁，最常见的门神有", "answer": "ABCD", "options":"神荼和郁垒, 秦叔宝和尉迟恭, 福禄寿三星, 哼哈二将"},
+  {"question": "春晚在上，一共创下了中国世界纪录协会世界综艺晚会的3项世界之最", "answer": "ABC", "options":"演出规模,演员阵容,播出时长和海内外观众收视率,演出节目"},
+  {"question": "春晚是从__起开始，每年在农历腊月三十晚上举行的", "answer": "B", "options":"1982,1983,1984,1985"},
+  {"question": "春节期间，离家在外的游子都要不远万里赶回家团团圆圆过新年，常吃的食物有__?", "answer": "ABD", "options": "年糕,饺子,柿饼,汤圆"},
+  {"question": "每逢春节，无论城市还是农村，家家户户都要精选一幅大红春联贴于门上，为节日增加喜庆气氛。这一习俗起于__，盛行于__，到了__，春联的思想性和艺术性都有了很大的提高", "answer": "A", "options": 
+    "宋代 明代 清代,唐代 宋代 明代,唐代 元代 明代,元代 明代 清代"},
+  {"question": "春联的种类比较多，依其使用场所，可分为门心、框对、横批、春条、斗方等。__贴于门板上端中心部位，__贴于左右两个门框上，__贴于门媚的横木上，__根据不同的内容，贴于相应的地方，“斗斤”也叫“门叶”，为正方菱形，多贴在家俱、影壁中", "answer": "A", 
+    "options": "门心 框对 横批 春条,门心 横批 框对 春条,横批 框对 春条 门心,横批 春条 框对 门心"},
+    {"question": "关于春节，有一个传说，传说中有一个破坏百姓好运的怪兽，它的名字是_", "answer": "D", 
+      "options": "蒲牢,犼,麒麟,年"},
+  {"question": "过年吃饺子，起源于__。", "answer": "A", "options": "春秋战国,殷商,清朝,宋朝"},
+  {"question": "旧俗春节期间大小店铺从大年初一起关门，从哪天开市？", "answer": "B", "options" : "正月初四,正月初五,正月初六,正月初七"}
+];
+
 
 var QAs = function (round) {
   this.qas = [];
@@ -115,8 +133,6 @@ var QA = function (options) {
     }
 
     this.options  = options.options.split(",");
-    console.log(this.options[0]);
-    console.log(this.options[0] && this.options[0].match(/http|png|jpg/));
     if(this.options[0] && this.options[0].match(/http|png|jpg/)){
       this.type = "images";
     }
@@ -170,6 +186,5 @@ QA.prototype.render = function () {
   }
     $("#answer").html(answer.join(""));
 }
-
 
 

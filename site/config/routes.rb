@@ -5,7 +5,11 @@ Site::Application.routes.draw do
   get "welcome/summary"
   post "answer" => "welcome#answer_question"
 
-  resources :users
+  resources :users do
+    collection do
+      get :export
+    end
+  end
 
   root "welcome#index"
 

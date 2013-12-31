@@ -1,4 +1,5 @@
 # -*- encoding : utf-8 -*-
+require "csv"
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   layout false
@@ -63,14 +64,29 @@ class UsersController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
+  def export
+    csv = ""
+    csv << "日期,访问人数,参与人数,闯关成功,微博数,平均逗留时间\n"
+    User.all.includes(:activities).group_by(&:visit_date).each do |time, users|
+      participate = users.select{|u| u.activities.where(:atype => "participate").size > 0}.length
+      finish_answer = users.select{|u| u.activities.where(:atype => "finish_answer").size > 0}.length
+      weibo = users.select{|u| u.weibo_account.present? }.length
+      stay_time = (users.sum(&:stay_time) / users.size).to_i
+      csv << "#{time}, #{users.size}, #{participate}, #{finish_answer}, #{weibo}, #{stay_time}\n"
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def user_params
-      params.require(:user).permit(:session_id, :weibo_account)
-    end
+    send_data csv, :filename => "stats.csv", disposition: 'attachment'
+    
+  end
+
+  private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def user_params
+    params.require(:user).permit(:session_id, :weibo_account)
+  end
 end
