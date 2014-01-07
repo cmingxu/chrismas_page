@@ -75,6 +75,12 @@ class UsersController < ApplicationController
       csv << "#{time}, #{users.size}, #{participate}, #{finish_answer}, #{weibo}, #{stay_time}\n"
     end
 
+    csv << "时间,年龄,性别,微博\n"
+
+    User.all.includes(:activities).each do |u|
+      created_at = u.created_at.in_time_zone("Beijing").strftime("%m/%d %H:%M")
+      csv << "#{u.age}, #{u.gender}, #{u.weibo_account}, #{created_at}\n"
+    end
     send_data csv, :filename => "stats.csv", disposition: 'attachment'
     
   end
